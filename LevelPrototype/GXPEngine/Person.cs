@@ -1,12 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GXPEngine;
+using TiledMapParser;
 
-namespace GXPEngine
+
+internal class Person : Sprite
 {
-    internal class Person
+    public Person(TiledLoader obj = null) : base("circle.png")
     {
+        if (obj != null)
+        {
+            width = 40;
+            height = 40;
+        }
     }
+
+    public void Grab()
+    {
+        LateDestroy();
+    }
+
+
 }
+

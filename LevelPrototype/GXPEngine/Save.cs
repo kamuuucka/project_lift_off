@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GXPEngine;
+using TiledMapParser;
 
-namespace GXPEngine
+internal class Save : Sprite
 {
-    internal class Save
+    public Save(TiledLoader obj = null) : base("colors.png")
     {
+
     }
 }

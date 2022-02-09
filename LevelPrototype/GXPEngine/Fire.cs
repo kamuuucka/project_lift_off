@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using GXPEngine;
+using TiledMapParser;
 
-namespace GXPEngine
+internal class Fire : Sprite
 {
-    internal class Fire
+    public Fire(TiledLoader obj = null) : base("triangle.png")
     {
+
     }
 }
+

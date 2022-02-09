@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GXPEngine;
+using TiledMapParser;
 
-namespace GXPEngine
+
+internal class Ladder : Sprite
 {
-    internal class Ladder
+    public Ladder(TiledLoader obj = null) : base("checkers.png")
     {
+
     }
 }
+

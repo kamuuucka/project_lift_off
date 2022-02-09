@@ -10,7 +10,6 @@ using TiledMapParser;
 internal class Level : GameObject
 {
     TiledLoader loader;
-    Random rand = new Random();
     public Level(string filename)
     {
         loader = new TiledLoader(filename);
