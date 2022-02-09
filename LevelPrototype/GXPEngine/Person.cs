@@ -4,7 +4,7 @@ using TiledMapParser;
 
 internal class Person : Sprite
 {
-    public Person(TiledLoader obj = null) : base("circle.png")
+    public Person(TiledObject obj = null) : base("circle.png")
     {
         if (obj != null)
         {

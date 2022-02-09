@@ -9,7 +9,7 @@ using TiledMapParser;
 
 internal class Ladder : Sprite
 {
-    public Ladder(TiledLoader obj = null) : base("checkers.png")
+    public Ladder(TiledObject obj = null) : base("checkers.png")
     {
 
     }
