@@ -5,17 +5,27 @@ using System.Text;
 using System.Threading.Tasks;
 using GXPEngine;
 
- internal class Fire : Sprite
+ internal class Fire : SpawnPoint
 {
     float fireX;
     float fireY;
-    public Fire(float x, float y) : base("colors.png")
+    string filename;
+    Sprite sprite;
+    public Fire() : base()
     {
-        //SetScaleXY(64, 64);
-        this.fireX = x;
-        this.fireY = y;
-        collider.isTrigger = true;
-        SetXY(fireX, fireY);
+        filename = "checkers.png";
+        sprite = new Sprite(filename);
+
+        if (isUsed == false)
+        {
+            Console.WriteLine(getX() + " " + getY());
+            x = getX();
+            y = getY();
+            isUsed = true;
+        }
+
+       // x = 64;
+        //y = 64;
     }
 }
 

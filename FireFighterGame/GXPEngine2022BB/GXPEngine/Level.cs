@@ -30,10 +30,7 @@ internal class Level : GameObject
         loader.autoInstance = true;
         loader.LoadObjectGroups();
 
-        for (int i = 0; i < 2; i++)
-        {
-            LateAddChild(new Fire(rand.Next(0, 1280), rand.Next(0, 768)));
-        }
+
     }
 }
 
