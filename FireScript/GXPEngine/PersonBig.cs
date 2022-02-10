@@ -12,5 +12,10 @@ internal class PersonBig : Sprite
         this.x = x;
         this.y = y;
     }
+
+    public void Grab()
+    {
+        LateDestroy();
+    }
 }
 

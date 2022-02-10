@@ -7,12 +7,13 @@ using TiledMapParser;
 internal class Level : GameObject
 {
     private TiledLoader loader;
-    public List<int> list = new List<int>();
     private List<TiledObject> tiledObjects = new List<TiledObject>();
     private List<int> phList = new List<int>();
     private List<int> randomNumbers = new List<int>();
     private List<SpawnPoint> spawnPoints = new List<SpawnPoint>();
     private int numberOfPeople = 3;
+    private int numberOfFires = 5;
+    private Player_LO player;
 
     public Level(string filename)
     {
@@ -20,7 +21,7 @@ internal class Level : GameObject
         {
             phList.Add(i);
         }
-        RandomNumbers(5);
+        RandomNumbers(numberOfFires);
 
         loader = new TiledLoader(filename);
         loader.OnObjectCreated += OnSpriteCreated;
@@ -29,18 +30,10 @@ internal class Level : GameObject
         SpawnPeople();
         x = 50;
         y = 100;
-
-        //foreach (int go in list)
-        //{
-        //    Console.WriteLine(go);
-        //}
-
-        //Console.WriteLine(list);
     }
+
     private void StartLevel(bool includeImageLayers = true)
     {
-
-
         loader.addColliders = false;
         loader.rootObject = this;
         loader.LoadImageLayers();
@@ -54,7 +47,12 @@ internal class Level : GameObject
         loader.autoInstance = true;
         loader.LoadObjectGroups();
 
+        player = FindObjectOfType<Player_LO>();
 
+        if (player != null)
+        {
+            AddChild(new Wall(player, 64 * loader.map.Height));
+        }
     }
 
     private void OnSpriteCreated(Sprite sprite, TiledObject obj)
@@ -66,7 +64,6 @@ internal class Level : GameObject
                 SpawnPoint spawn = new SpawnPoint(obj.X, obj.Y, obj);
                 LateAddChild(spawn);
 
-                list.Add(spawn.GetNumber());
                 tiledObjects.Add(obj);
                 spawnPoints.Add(spawn);
             }
@@ -84,9 +81,7 @@ internal class Level : GameObject
                 LateAddChild(fireBig);
                 spawnPoints[randomNumbers[i]].isUsed = true;
             }
-           
-        }
-        
+        } 
     }
 
     private void SpawnPeople()
@@ -107,18 +102,12 @@ internal class Level : GameObject
                 randomNumbers.Clear();
                 RandomNumbers(1);
             }
-
         }
     }
 
     private void RandomNumbers(int number)
     {
         randomNumbers = phList.GetRandomItems(number);
-        //for (int i = 0; i < 5; i++)
-        //{
-        //    Console.WriteLine(phList[i]);
-        //}
-        
     }
 }
 

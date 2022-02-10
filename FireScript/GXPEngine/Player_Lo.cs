@@ -60,13 +60,14 @@ internal class Player_LO : Sprite
         
         canClimb = false;
         CheckCollisions();
-        OutOfScreen();
+        OutOfScreenSides();
     }
 
-    private bool OutOfScreen()
+    private bool OutOfScreenSides()
     {
         if (x < 0 || x > 1280)
         {
+            
             x = previousX;
             return true;
         }
@@ -81,11 +82,11 @@ internal class Player_LO : Sprite
         GameObject[] collisions = GetCollisions();
         for (int i = 0; i < collisions.Length; i++)
         {
-            if (collisions[i] is Person)
+            if (collisions[i] is PersonBig)
             {
                 if (peopleCollected == 0)
                 {
-                    ((Person)collisions[i]).Grab();
+                    ((PersonBig)collisions[i]).Grab();
                     peopleCollected++;
                     Console.WriteLine("PERSON RESCUED, YOU ARE CARRYING {0} PERSON", peopleCollected);
                 }
@@ -105,7 +106,7 @@ internal class Player_LO : Sprite
                 peopleCollected = 0;
                 Console.WriteLine("TOTAL AMOUNT OF PEOPLE SAVED: {0}", points);
             }
-            if (collisions[i] is Fire)
+            if (collisions[i] is FireBig)
             {
                 GoBack();
             }
