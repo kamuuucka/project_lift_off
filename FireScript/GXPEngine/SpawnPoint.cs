@@ -1,13 +1,38 @@
-﻿using System;
+﻿using GXPEngine;
+using TiledMapParser;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GXPEngine;
 
 
-internal class SpawnPoint
+internal class SpawnPoint : GameObject
 {
+    int number;
+    public bool isUsed;
+    List<int> spawnpoints = new List<int>();
 
+    public SpawnPoint(float x, float y, TiledObject obj = null)
+    {
+        obj.X = x;
+        obj.Y = y;
+        number = obj.GetIntProperty("number", 0);
+        isUsed = obj.GetBoolProperty("isUsed", false);
+
+        //Console.WriteLine("Spawnpoint {0} spawned on x:{1} y:{2}", number, x, y);
+    }
+
+    public int GetNumber()
+    {
+        return number;
+    }
+
+    public bool IsUsed()
+    {
+        return isUsed;
+    }
+
+    public void AddToList(int spawnNumber)
+    {
+        spawnpoints.Add(spawnNumber);
+    }
 }
 

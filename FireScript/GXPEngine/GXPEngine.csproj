@@ -41,11 +41,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fire.cs" />
+    <Compile Include="FireBig.cs" />
     <Compile Include="GXPEngine\AddOns\Gizmos.cs" />
     <Compile Include="GXPEngine\AddOns\SpriteBatch.cs" />
     <Compile Include="GXPEngine\AddOns\TiledLoader.cs" />
     <Compile Include="Ladder.cs" />
     <Compile Include="Level.cs" />
+    <Compile Include="ListExtensions.cs" />
     <Compile Include="MyGame.cs" />
     <Compile Include="GXPEngine\Core\Canvas.cs" />
     <Compile Include="GXPEngine\Game.cs" />
@@ -85,6 +87,7 @@
     <Compile Include="GXPEngine\SoLoud\Soloud.cs" />
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
     <Compile Include="Person.cs" />
+    <Compile Include="PersonBig.cs" />
     <Compile Include="Player_Lo.cs" />
     <Compile Include="Save.cs" />
     <Compile Include="SpawnPoint.cs" />

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class MyGame : Game
 {
-	string levelName = "map_prototype2.tmx";
+	string levelName = "map_prototype3.tmx";
 	public MyGame() : base(1366, 768, false)		// Create a window that's 800x600 and NOT fullscreen
 	{
 		LoadLevel(levelName);
