@@ -74,8 +74,6 @@ internal class Player_LO : Sprite
         {
             return false;
         }
-
-
     }
 
     private void CheckCollisions()

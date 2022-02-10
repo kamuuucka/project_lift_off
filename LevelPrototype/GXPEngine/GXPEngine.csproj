@@ -87,6 +87,7 @@
     <Compile Include="Person.cs" />
     <Compile Include="Player_Lo.cs" />
     <Compile Include="Save.cs" />
+    <Compile Include="SpawnPoint.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

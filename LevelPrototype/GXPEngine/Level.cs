@@ -14,11 +14,15 @@ internal class Level : GameObject
     {
         loader = new TiledLoader(filename);
         StartLevel();
+        x = 50;
+        y = 100;
     }
     private void StartLevel(bool includeImageLayers = true)
     {
+
+
         loader.addColliders = false;
-        loader.rootObject = game;
+        loader.rootObject = this;
         loader.LoadImageLayers();
         loader.rootObject = this;
         loader.LoadTileLayers(0);
