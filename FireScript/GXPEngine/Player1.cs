@@ -8,8 +8,7 @@ internal class Player1 : Sprite
     private float previousY = 0;
     private float previousY2 = 0;
     protected float playerSpeed = 5;
-    private int damage = -1;
-    private int lives;
+
 
     public Player1(float x, float y) : base("colors.png")
     {

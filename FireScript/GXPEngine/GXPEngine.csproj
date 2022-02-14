@@ -48,6 +48,7 @@
     <Compile Include="GXPEngine\AddOns\TiledLoader.cs" />
     <Compile Include="Ladder.cs" />
     <Compile Include="Level.cs" />
+    <Compile Include="LevelManager.cs" />
     <Compile Include="ListExtensions.cs" />
     <Compile Include="MyGame.cs" />
     <Compile Include="GXPEngine\Core\Canvas.cs" />

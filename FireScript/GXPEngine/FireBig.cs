@@ -1,32 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GXPEngine;
 
 internal class FireBig : Sprite
 {
-    //public int Lives
-    //{
-    //    get
-    //    {
-    //        return lives;
-    //    }
-    //    set
-    //    {
-    //        lives = value;
-    //        if (lives < 0)
-    //        {
-    //            lives = 0;
-    //        }
-    //    }
-    //}
-
-    public FireBig( float x, float y) : base ("triangle.png")
+    private int lives;
+    private const int START_LIVES = 10;
+    private SpawnPoint spawnPoint;
+    public FireBig( float x, float y, SpawnPoint spawnPoint) : base ("triangle.png")
     {
         this.x = x;
         this.y = y;
+        //spawnPoint = new SpawnPoint(x, y);
+        this.spawnPoint = spawnPoint;
         Reset();
     }
 
@@ -36,11 +21,9 @@ internal class FireBig : Sprite
         {
             Console.WriteLine("I DIE");
             LateDestroy();
+            spawnPoint.IsUsed = false;
         }
     }
-
-    private int lives;
-    private const int START_LIVES = 10;
 
     public void ShootWater()
     {
@@ -64,7 +47,6 @@ internal class FireBig : Sprite
 
     void Update()
     {
-        //ShootWater();
         FireDeath(lives);
     }
 

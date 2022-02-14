@@ -13,8 +13,6 @@ internal class Level : GameObject
     private List<SpawnPoint> spawnPoints = new List<SpawnPoint>();
     private int numberOfPeople = 3;
     private int numberOfFires = 5;
-    private Player2 player;
-    private bool isPlayer = false;
     private float player1X;
     private float player1Y;
     private float player2X;
@@ -76,9 +74,7 @@ internal class Level : GameObject
                 SpawnPointPlayer sPlayer = new SpawnPointPlayer(obj.X, obj.Y, obj);
                 LateAddChild(sPlayer);
 
-                isPlayer = sPlayer.isPlayer1;
-
-                if (isPlayer)
+                if (sPlayer.isPlayer1)
                 {
                     player1X = obj.X;
                     player1Y = obj.Y;
@@ -102,11 +98,11 @@ internal class Level : GameObject
     {
         for (int i = 0; i < randomNumbers.Count; i++)
         {
-            if (spawnPoints[randomNumbers[i]].IsUsed() == false)
+            if (!spawnPoints[randomNumbers[i]].IsUsed)
             {
-                FireBig fireBig = new FireBig(tiledObjects[randomNumbers[i]].X, tiledObjects[randomNumbers[i]].Y);
+                FireBig fireBig = new FireBig(tiledObjects[randomNumbers[i]].X, tiledObjects[randomNumbers[i]].Y, spawnPoints[randomNumbers[i]]);
                 LateAddChild(fireBig);
-                spawnPoints[randomNumbers[i]].isUsed = true;
+                spawnPoints[randomNumbers[i]].IsUsed = true;
             }
         }
     }
@@ -118,11 +114,11 @@ internal class Level : GameObject
         RandomNumbers(1);
         while (properlyGenerated != numberOfPeople)
         {
-            if (spawnPoints[randomNumbers[0]].IsUsed() == false)
+            if (!spawnPoints[randomNumbers[0]].IsUsed)
             {
                 PersonBig personBig = new PersonBig(tiledObjects[randomNumbers[0]].X, tiledObjects[randomNumbers[0]].Y);
                 LateAddChild(personBig);
-                spawnPoints[randomNumbers[0]].isUsed = true;
+                spawnPoints[randomNumbers[0]].IsUsed = true;
                 properlyGenerated++;
             }
             else

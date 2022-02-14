@@ -6,29 +6,53 @@ using System.Collections.Generic;
 
 internal class SpawnPoint : GameObject
 {
-    int number;
-    public bool isUsed;
-    private bool isPlayer;
-    List<int> spawnpoints = new List<int>();
+    private bool isUsed;
+    public bool IsUsed
+    {
+        get
+        {
+            return isUsed;
+        }
+        set
+        {
+            isUsed = value;
+        }
+    }
+
+    private Sprite sprite = new Sprite("checkers.png");
 
     public SpawnPoint(float x, float y, TiledObject obj = null)
     {
-        obj.X = x;
-        obj.Y = y;
-        number = obj.GetIntProperty("number", 0);
-        isUsed = obj.GetBoolProperty("isUsed", false);
+        //obj.X = x;
+        //obj.Y = y;
+        this.x = x;
+        this.y = y;
+        if (obj != null)
+        {
+            isUsed = obj.GetBoolProperty("isUsed", false);
+        }
 
-        //Console.WriteLine("Spawnpoint {0} spawned on x:{1} y:{2}", number, x, y);
+        
+
+        AddChild(sprite);
     }
 
-    public int GetNumber()
+    void Update()
     {
-        return number;
+        if (Input.GetKeyUp(Key.R))
+        {
+            Console.WriteLine("SPAWNPOINT: "+ x + ", " + y + " state: " + isUsed);
+        }
+
+        if (isUsed)
+        {
+            sprite.SetColor(255, 0, 0);
+        }
+        else
+        {
+            sprite.SetColor(0,0,255);
+        }
     }
 
-    public bool IsUsed()
-    {
-        return isUsed;
-    }
 }
 
