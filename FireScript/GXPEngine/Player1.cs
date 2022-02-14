@@ -6,12 +6,13 @@ internal class Player1 : Sprite
 {
     private float previousX = 0;
     private float previousY = 0;
+    private float previousY2 = 0;
     protected float playerSpeed = 5;
     public Player1(float x, float y) : base("colors.png")
     {
         this.x = x;
         this.y = y;
-        Console.WriteLine("Player 1: " + x + " " + y); 
+        Console.WriteLine("Player 1: " + x + " " + y);
     }
 
     private void CharacterMovement()
@@ -29,14 +30,40 @@ internal class Player1 : Sprite
 
         if (Input.GetKey(Key.UP))
         {
-            Move(0, -1);
+            previousY2 = y;
+            Move(0, -playerSpeed);
             previousY = y;
         }
         else if (Input.GetKey(Key.DOWN))
         {
-            Move(0,1);
+            previousY2 = y;
+            Move(0, playerSpeed);
             previousY = y;
         }
+
+        CheckCollisions();
+    }
+
+    private void CheckCollisions()
+    {
+        GameObject[] collisions = GetCollisions();
+        for (int i = 0; i < collisions.Length; i++)
+        {
+            if (collisions[i] is Ladder)
+            {
+                GoBack();
+            }
+            if (collisions[i] is Wall)
+            {
+                y = previousY2;
+            }
+        }
+    }
+
+    private void GoBack()
+    {
+        y = previousY;
+        x = previousX;
     }
 
     void Update()

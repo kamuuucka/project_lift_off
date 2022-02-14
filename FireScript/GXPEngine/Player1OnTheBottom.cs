@@ -6,11 +6,11 @@ internal class Player1OnTheBottom : Player1
 {
     private Sprite player = new Sprite("square.png");
     private float previousX = 0;
-    private float previousY = 0;
     public Player1OnTheBottom(float x, float y) : base(x, y)
     {
         this.x = x;
         this.y = y;
+        collider.isTrigger = true;
         AddChild(player);
     }
 
@@ -28,9 +28,22 @@ internal class Player1OnTheBottom : Player1
         }
     }
 
+    private void CheckCollisions()
+    {
+        GameObject[] collisions = GetCollisions();
+        for (int i = 0; i < collisions.Length; i++)
+        {
+            if (collisions[i] is Ladder)
+            {
+                x = previousX;
+            }
+        }
+    }
+
     void Update()
     {
         Movement();
+        CheckCollisions();
     }
 }
 

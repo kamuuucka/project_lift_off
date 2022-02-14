@@ -47,6 +47,7 @@ internal class Level : GameObject
         loader.LoadImageLayers();
         loader.AddManualType("SpawnPoint");
         loader.AddManualType("SpawnPointPlayer");
+        loader.AddManualType("Wall");
         loader.rootObject = this;
         loader.LoadTileLayers(0);
         loader.addColliders = true;
@@ -55,13 +56,7 @@ internal class Level : GameObject
         loader.LoadTileLayers(3);
         loader.autoInstance = true;
         loader.LoadObjectGroups();
-
-        player = FindObjectOfType<Player2>();
-
-        if (player != null)
-        {
-            // AddChild(new Wall(player, 64 * loader.map.Height));
-        }
+        
     }
 
     private void OnSpriteCreated(Sprite sprite, TiledObject obj)
@@ -93,8 +88,11 @@ internal class Level : GameObject
                     player2X = obj.X;
                     player2Y = obj.Y;
                 }
-
-                //Create players in separate method 
+            }
+            if(obj.Type == "Wall")
+            {
+                Wall wall = new Wall(obj.X, obj.Y, obj);
+                LateAddChild(wall);
             }
         }
 

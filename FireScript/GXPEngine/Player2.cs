@@ -8,6 +8,7 @@ using GXPEngine;
 internal class Player2 : Sprite
 {
     private float previousY = 0;
+    private float previousY2 = 0;
     private float previousX = 0;
     private float startX = 0;
     public float startY = 0;
@@ -25,6 +26,7 @@ internal class Player2 : Sprite
         startY = y;
         previousX = startX;
         previousY = startY;
+        previousY2 = startY;
         Console.WriteLine("Player2: " + x + ", " + y);
     }
 
@@ -44,14 +46,14 @@ internal class Player2 : Sprite
         {
             if (Input.GetKeyUp(Key.W))
             {
-                
+                previousY2 = y;
                 Console.WriteLine("PY: {0}, Y: {1}", previousY, y);
                 Move(0, -speed);
                 previousY = y;
             }
             else if (Input.GetKeyUp(Key.S))
             {
-                
+                previousY2 = y;
                 Console.WriteLine("PY: {0}, Y: {1}", previousY, y);
                 Move(0, speed);
                 previousY = y;
@@ -109,6 +111,10 @@ internal class Player2 : Sprite
             if (collisions[i] is FireBig)
             {
                 GoBack();
+            }
+            if (collisions[i] is Wall)
+            {
+                y = previousY2;
             }
         }
     }

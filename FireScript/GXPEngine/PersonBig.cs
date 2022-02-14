@@ -11,6 +11,7 @@ internal class PersonBig : Sprite
     {
         this.x = x;
         this.y = y;
+        collider.isTrigger = true;
     }
 
     public void Grab()
