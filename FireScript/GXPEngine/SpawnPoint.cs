@@ -8,6 +8,7 @@ internal class SpawnPoint : GameObject
 {
     int number;
     public bool isUsed;
+    private bool isPlayer;
     List<int> spawnpoints = new List<int>();
 
     public SpawnPoint(float x, float y, TiledObject obj = null)
@@ -28,11 +29,6 @@ internal class SpawnPoint : GameObject
     public bool IsUsed()
     {
         return isUsed;
-    }
-
-    public void AddToList(int spawnNumber)
-    {
-        spawnpoints.Add(spawnNumber);
     }
 }
 

@@ -13,7 +13,12 @@ internal class Level : GameObject
     private List<SpawnPoint> spawnPoints = new List<SpawnPoint>();
     private int numberOfPeople = 3;
     private int numberOfFires = 5;
-    private Player_LO player;
+    private Player2 player;
+    private bool isPlayer = false;
+    private float player1X;
+    private float player1Y;
+    private float player2X;
+    private float player2Y;
 
     public Level(string filename)
     {
@@ -21,23 +26,27 @@ internal class Level : GameObject
         {
             phList.Add(i);
         }
-        RandomNumbers(numberOfFires);
 
         loader = new TiledLoader(filename);
         loader.OnObjectCreated += OnSpriteCreated;
         StartLevel();
         SpawnFire();
         SpawnPeople();
+        SpawnPlayer2();
+        SpawnPlayer1();
         x = 50;
         y = 100;
     }
 
     private void StartLevel(bool includeImageLayers = true)
     {
+        RandomNumbers(numberOfFires);
+
         loader.addColliders = false;
         loader.rootObject = this;
         loader.LoadImageLayers();
         loader.AddManualType("SpawnPoint");
+        loader.AddManualType("SpawnPointPlayer");
         loader.rootObject = this;
         loader.LoadTileLayers(0);
         loader.addColliders = true;
@@ -47,11 +56,11 @@ internal class Level : GameObject
         loader.autoInstance = true;
         loader.LoadObjectGroups();
 
-        player = FindObjectOfType<Player_LO>();
+        player = FindObjectOfType<Player2>();
 
         if (player != null)
         {
-            AddChild(new Wall(player, 64 * loader.map.Height));
+            // AddChild(new Wall(player, 64 * loader.map.Height));
         }
     }
 
@@ -67,8 +76,28 @@ internal class Level : GameObject
                 tiledObjects.Add(obj);
                 spawnPoints.Add(spawn);
             }
+            if (obj.Type == "SpawnPointPlayer")
+            {
+                SpawnPointPlayer sPlayer = new SpawnPointPlayer(obj.X, obj.Y, obj);
+                LateAddChild(sPlayer);
+
+                isPlayer = sPlayer.isPlayer1;
+
+                if (isPlayer)
+                {
+                    player1X = obj.X;
+                    player1Y = obj.Y;
+                }
+                else
+                {
+                    player2X = obj.X;
+                    player2Y = obj.Y;
+                }
+
+                //Create players in separate method 
+            }
         }
-       
+
     }
 
     private void SpawnFire()
@@ -81,7 +110,7 @@ internal class Level : GameObject
                 LateAddChild(fireBig);
                 spawnPoints[randomNumbers[i]].isUsed = true;
             }
-        } 
+        }
     }
 
     private void SpawnPeople()
@@ -97,12 +126,27 @@ internal class Level : GameObject
                 LateAddChild(personBig);
                 spawnPoints[randomNumbers[0]].isUsed = true;
                 properlyGenerated++;
-            } else
+            }
+            else
             {
                 randomNumbers.Clear();
                 RandomNumbers(1);
             }
         }
+    }
+
+    private void SpawnPlayer1()
+    {
+        Player1 player = new Player1(player1X, player1Y);
+        Player1OnTheBottom playerOnTheBottom = new Player1OnTheBottom(player1X, loader.map.Height * 128 - 64);
+        LateAddChild(player);
+        LateAddChild(playerOnTheBottom);
+    }
+
+    private void SpawnPlayer2()
+    {
+        Player2 player = new Player2(player2X, player2Y);
+        LateAddChild(player);
     }
 
     private void RandomNumbers(int number)

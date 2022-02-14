@@ -5,27 +5,27 @@ using GXPEngine;
 /// <summary>
 /// Player. Contains everything important for the player.
 /// </summary>
-internal class Player_LO : Sprite
+internal class Player2 : Sprite
 {
     private float previousY = 0;
     private float previousX = 0;
-    public float startX = 0;
+    private float startX = 0;
     public float startY = 0;
     private float speed = 128f;
     private bool canClimb = false;
     private int points = 0;
     private int peopleCollected = 0;
 
-    public Player_LO(TiledObject obj = null) : base("square.png")
+    public Player2(float x, float y) : base("square.png")
     {
-        if (obj != null)
-        {
-            startX = obj.X + 32;
-            startY = obj.Y + 32;
-            previousX = startX;
-            previousY = startY;
-            Console.WriteLine("Player spawned: " + startX + ", " + startY);
-        }
+
+        this.x = x;
+        this.y = y;
+        startX = x;
+        startY = y;
+        previousX = startX;
+        previousY = startY;
+        Console.WriteLine("Player2: " + x + ", " + y);
     }
 
     private void CharacterMovement()

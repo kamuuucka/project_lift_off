@@ -88,9 +88,12 @@
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="PersonBig.cs" />
-    <Compile Include="Player_Lo.cs" />
+    <Compile Include="Player1.cs" />
+    <Compile Include="Player1OnTheBottom.cs" />
+    <Compile Include="Player2.cs" />
     <Compile Include="Save.cs" />
     <Compile Include="SpawnPoint.cs" />
+    <Compile Include="SpawnPointPlayer.cs" />
     <Compile Include="Wall.cs" />
   </ItemGroup>
   <ItemGroup>
