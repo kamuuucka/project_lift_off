@@ -11,6 +11,7 @@ internal class Level : GameObject
     private List<int> phList = new List<int>();
     private List<int> randomNumbers = new List<int>();
     private List<SpawnPoint> spawnPoints = new List<SpawnPoint>();
+    private List<FireBig> fires = new List<FireBig>();
     private int numberOfPeople = 3;
     private int numberOfFires = 5;
     private float player1X;
@@ -18,7 +19,10 @@ internal class Level : GameObject
     private float player2X;
     private float player2Y;
     private Player2 player2;
+    private Player1 player1;
     private PlayerData playerData = new PlayerData();
+    public int properlyGeneratedFire = 0;
+    private bool gameLoadedFirstTime = true;
 
     public Level(string filename)
     {
@@ -36,6 +40,7 @@ internal class Level : GameObject
         SpawnPlayer1();
         x = 50;
         y = 100;
+        gameLoadedFirstTime = false;
     }
 
     private void StartLevel(bool includeImageLayers = true)
@@ -54,7 +59,6 @@ internal class Level : GameObject
         loader.LoadTileLayers(3);
         loader.autoInstance = true;
         loader.LoadObjectGroups();
-        
     }
 
     private void OnSpriteCreated(Sprite sprite, TiledObject obj)
@@ -96,16 +100,41 @@ internal class Level : GameObject
 
     private void SpawnFire()
     {
-        RandomNumbers(numberOfFires);
-        for (int i = 0; i < randomNumbers.Count; i++)
+       //RandomNumbers(numberOfFires);
+
+        //if (gameLoadedFirstTime)
+        //{
+        //    for (int i = 0; i < randomNumbers.Count; i++)
+        //    {
+        //        if (!spawnPoints[randomNumbers[i]].IsUsed)
+        //        {
+        //            FireBig fireBig = new FireBig(tiledObjects[randomNumbers[i]].X, tiledObjects[randomNumbers[i]].Y, spawnPoints[randomNumbers[i]]);
+        //            LateAddChild(fireBig);
+        //            fires.Add(fireBig);
+        //            spawnPoints[randomNumbers[i]].IsUsed = true;
+        //        }
+        //    }
+        //}
+
+        int properlyGenerated = 0;
+        randomNumbers.Clear();
+        RandomNumbers(1);
+        while (properlyGeneratedFire != numberOfFires)
         {
-            if (!spawnPoints[randomNumbers[i]].IsUsed)
+            if (!spawnPoints[randomNumbers[0]].IsUsed)
             {
-                FireBig fireBig = new FireBig(tiledObjects[randomNumbers[i]].X, tiledObjects[randomNumbers[i]].Y, spawnPoints[randomNumbers[i]]);
+                FireBig fireBig = new FireBig(tiledObjects[randomNumbers[0]].X, tiledObjects[randomNumbers[0]].Y, spawnPoints[randomNumbers[0]], player1);
                 LateAddChild(fireBig);
-                spawnPoints[randomNumbers[i]].IsUsed = true;
+                spawnPoints[randomNumbers[0]].IsUsed = true;
+                properlyGeneratedFire++;
+            }
+            else
+            {
+                randomNumbers.Clear();
+                RandomNumbers(1);
             }
         }
+
     }
 
     private void SpawnPeople()
@@ -132,8 +161,8 @@ internal class Level : GameObject
 
     private void SpawnPlayer1()
     {
-        Player1 player = new Player1(player1X, player1Y);
-        Player1OnTheBottom playerOnTheBottom = new Player1OnTheBottom(player1X, loader.map.Height * 128 - 64);
+        Player1 player = new Player1(player1X, player1Y, this);
+        Player1OnTheBottom playerOnTheBottom = new Player1OnTheBottom(player1X, loader.map.Height * 128 - 64, this);
         LateAddChild(player);
         LateAddChild(playerOnTheBottom);
     }
@@ -147,15 +176,6 @@ internal class Level : GameObject
     public void RestartLevel()
     {
         SpawnPeople();
-    }
-
-    private void DestroyAll()
-    {
-        List<GameObject> children = GetChildren();
-        foreach (GameObject child in children)
-        {
-            child.LateDestroy();
-        }
     }
 
     private void RandomNumbers(int number)
@@ -177,7 +197,8 @@ internal class Level : GameObject
 
     void Update()
     {
-        Console.WriteLine(playerData.Lives);
+        //Console.WriteLine(playerData.Lives);
+        SpawnFire();
     }
 }
 

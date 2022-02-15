@@ -26,7 +26,8 @@ public class MyGame : Game
 
 		if (level.GameOver())
         {
-			Destroy();
+			//Exiting game, make it end screen later
+			//Destroy();
         }
 	}
 

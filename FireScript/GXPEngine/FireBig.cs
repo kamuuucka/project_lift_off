@@ -6,11 +6,16 @@ internal class FireBig : Sprite
     private int lives;
     private const int START_LIVES = 10;
     private SpawnPoint spawnPoint;
-    public FireBig( float x, float y, SpawnPoint spawnPoint) : base ("triangle.png")
+    private Player1 player1;
+    public FireBig( float x, float y, SpawnPoint spawnPoint, Player1 player) : base ("triangle.png")
     {
         this.x = x;
         this.y = y;
         this.spawnPoint = spawnPoint;
+        if (player1 != null)
+        {
+            player1 = player;
+        }
         Reset();
     }
 
@@ -19,8 +24,10 @@ internal class FireBig : Sprite
         if (lives == 0)
         {
             Console.WriteLine("I DIE");
+            player1.canBeEmpty(true);
             LateDestroy();
             spawnPoint.IsUsed = false;
+            
         }
     }
 

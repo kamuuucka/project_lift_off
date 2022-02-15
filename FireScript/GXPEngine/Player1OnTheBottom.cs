@@ -6,7 +6,7 @@ internal class Player1OnTheBottom : Player1
 {
     private Sprite player = new Sprite("square.png");
     private float previousX = 0;
-    public Player1OnTheBottom(float x, float y) : base(x, y)
+    public Player1OnTheBottom(float x, float y, Level level) : base(x, y, level)
     {
         this.x = x;
         this.y = y;

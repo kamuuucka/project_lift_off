@@ -8,12 +8,14 @@ internal class Player1 : Sprite
     private float previousY = 0;
     private float previousY2 = 0;
     protected float playerSpeed = 5;
+    private Level level;
+    private bool isEmpty = false;
 
-
-    public Player1(float x, float y) : base("colors.png")
+    public Player1(float x, float y, Level level) : base("colors.png")
     {
         this.x = x;
         this.y = y;
+        this.level = level;
         Console.WriteLine("Player 1: " + x + " " + y);
     }
 
@@ -70,6 +72,12 @@ internal class Player1 : Sprite
     {
         y = previousY;
         x = previousX;
+    }
+
+    public void canBeEmpty(bool canBe)
+    {
+        isEmpty = canBe;
+        level.properlyGeneratedFire--;
     }
 
     void Update()
