@@ -8,6 +8,7 @@ public class MyGame : Game
 	string levelName = "map_prototype3.tmx";
 	string mainMenu = "";
 	string endScreen = "";
+	private Level level;
 	public MyGame() : base(1366, 768, false)		// Create a window that's 800x600 and NOT fullscreen
 	{
 		LoadLevel(levelName);
@@ -21,6 +22,11 @@ public class MyGame : Game
         {
 			Console.WriteLine("Reloading the level " + levelName);
 			LoadLevel(levelName);
+        }
+
+		if (level.GameOver())
+        {
+			Destroy();
         }
 	}
 
@@ -42,6 +48,7 @@ public class MyGame : Game
 	void LoadLevel(string filename)
 	{
 		DestroyAll();
-		LateAddChild(new Level(filename));
+		level = new Level(filename);
+		LateAddChild(level);
 	}
 }

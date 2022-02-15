@@ -14,20 +14,25 @@ internal class Player2 : Sprite
     public float startY = 0;
     private float speed = 128f;
     private bool canClimb = false;
-    private int points = 0;
+    public int points = 0;
     private int peopleCollected = 0;
+    public bool firstGame;
+    private Level level;
+    
 
-    public Player2(float x, float y) : base("square.png")
+    public Player2(float x, float y, Level level) : base("square.png")
     {
 
         this.x = x;
         this.y = y;
+        this.level = level;
         startX = x;
         startY = y;
         previousX = startX;
         previousY = startY;
         previousY2 = startY;
         Console.WriteLine("Player2: " + x + ", " + y);
+        firstGame = true;
     }
 
     private void CharacterMovement()
@@ -89,7 +94,9 @@ internal class Player2 : Sprite
                 if (peopleCollected == 0)
                 {
                     ((PersonBig)collisions[i]).Grab();
+                    ((PersonBig)collisions[i]).IsPicked = true;
                     peopleCollected++;
+                    firstGame = false;
                     Console.WriteLine("PERSON RESCUED, YOU ARE CARRYING {0} PERSON", peopleCollected);
                 }
                 else
@@ -107,6 +114,13 @@ internal class Player2 : Sprite
                 points += peopleCollected;
                 peopleCollected = 0;
                 Console.WriteLine("TOTAL AMOUNT OF PEOPLE SAVED: {0}", points);
+                if (points % 3 == 0 && firstGame == false)
+                {
+                    level.RestartLevel();
+                    x = startX;
+                    y = startY;
+                    firstGame = true;
+                }
             }
             if (collisions[i] is FireBig)
             {

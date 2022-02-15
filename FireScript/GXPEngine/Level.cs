@@ -17,6 +17,8 @@ internal class Level : GameObject
     private float player1Y;
     private float player2X;
     private float player2Y;
+    private Player2 player2;
+    private PlayerData playerData = new PlayerData();
 
     public Level(string filename)
     {
@@ -38,8 +40,6 @@ internal class Level : GameObject
 
     private void StartLevel(bool includeImageLayers = true)
     {
-        RandomNumbers(numberOfFires);
-
         loader.addColliders = false;
         loader.rootObject = this;
         loader.LoadImageLayers();
@@ -96,6 +96,7 @@ internal class Level : GameObject
 
     private void SpawnFire()
     {
+        RandomNumbers(numberOfFires);
         for (int i = 0; i < randomNumbers.Count; i++)
         {
             if (!spawnPoints[randomNumbers[i]].IsUsed)
@@ -116,7 +117,7 @@ internal class Level : GameObject
         {
             if (!spawnPoints[randomNumbers[0]].IsUsed)
             {
-                PersonBig personBig = new PersonBig(tiledObjects[randomNumbers[0]].X, tiledObjects[randomNumbers[0]].Y);
+                PersonBig personBig = new PersonBig(tiledObjects[randomNumbers[0]].X, tiledObjects[randomNumbers[0]].Y, spawnPoints[randomNumbers[0]], playerData);
                 LateAddChild(personBig);
                 spawnPoints[randomNumbers[0]].IsUsed = true;
                 properlyGenerated++;
@@ -139,13 +140,44 @@ internal class Level : GameObject
 
     private void SpawnPlayer2()
     {
-        Player2 player = new Player2(player2X, player2Y);
-        LateAddChild(player);
+        player2 = new Player2(player2X, player2Y, this);
+        LateAddChild(player2);
+    }
+
+    public void RestartLevel()
+    {
+        SpawnPeople();
+    }
+
+    private void DestroyAll()
+    {
+        List<GameObject> children = GetChildren();
+        foreach (GameObject child in children)
+        {
+            child.LateDestroy();
+        }
     }
 
     private void RandomNumbers(int number)
     {
         randomNumbers = phList.GetRandomItems(number);
+    }
+
+    public bool GameOver()
+    {
+        if (playerData.Lives == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    void Update()
+    {
+        Console.WriteLine(playerData.Lives);
     }
 }
 

@@ -93,6 +93,7 @@
     <Compile Include="Player1.cs" />
     <Compile Include="Player1OnTheBottom.cs" />
     <Compile Include="Player2.cs" />
+    <Compile Include="PlayerData.cs" />
     <Compile Include="Save.cs" />
     <Compile Include="SpawnPoint.cs" />
     <Compile Include="SpawnPointPlayer.cs" />

@@ -10,7 +10,6 @@ internal class FireBig : Sprite
     {
         this.x = x;
         this.y = y;
-        //spawnPoint = new SpawnPoint(x, y);
         this.spawnPoint = spawnPoint;
         Reset();
     }
