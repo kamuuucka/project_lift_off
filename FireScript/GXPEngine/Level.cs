@@ -34,10 +34,11 @@ internal class Level : GameObject
         loader = new TiledLoader(filename);
         loader.OnObjectCreated += OnSpriteCreated;
         StartLevel();
-        SpawnFire();
+        
         SpawnPeople();
         SpawnPlayer2();
         SpawnPlayer1();
+        SpawnFire();
         x = 50;
         y = 100;
         gameLoadedFirstTime = false;
@@ -161,9 +162,9 @@ internal class Level : GameObject
 
     private void SpawnPlayer1()
     {
-        Player1 player = new Player1(player1X, player1Y, this);
+        player1 = new Player1(player1X, player1Y, this);
         Player1OnTheBottom playerOnTheBottom = new Player1OnTheBottom(player1X, loader.map.Height * 128 - 64, this);
-        LateAddChild(player);
+        LateAddChild(player1);
         LateAddChild(playerOnTheBottom);
     }
 

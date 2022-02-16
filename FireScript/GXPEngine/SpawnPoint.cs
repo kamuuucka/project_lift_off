@@ -31,7 +31,7 @@ internal class SpawnPoint : GameObject
         {
             isUsed = obj.GetBoolProperty("isUsed", false);
         }
-
+        sprite.alpha = 0;
         
 
         AddChild(sprite);

@@ -17,6 +17,7 @@ internal class Ladder : Sprite
         Console.WriteLine(obj.Height);
         ladderHeight = obj.Height;
         ladderY = obj.Y;
+        alpha = 0;
     }
 
     public float getLadderHeight()

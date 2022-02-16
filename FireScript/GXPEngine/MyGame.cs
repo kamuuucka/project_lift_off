@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class MyGame : Game
 {
-	string levelName = "map_prototype3.tmx";
+	string levelName = "map.tmx";
 	string mainMenu = "";
 	string endScreen = "";
 	private Level level;
