@@ -7,8 +7,10 @@ internal class PlayerData
 {
     private const int START_LIVES = 3;
     private const int START_POINTS = 0;
+    private const int TOTAL_PEOPLE_PICKED = 0;
     private int lives = 0;
     private int points = 0;
+    private int totalPeoplePicked = 0;
     private float player1X;
     private float player1Y;
     private float player2X;
@@ -60,6 +62,12 @@ internal class PlayerData
         set { player2Y = value; }
     }
 
+    public int TotalPeoplePicked
+    {
+        get { return totalPeoplePicked; }
+        set { totalPeoplePicked = value; }
+    }
+
     public PlayerData()
     {
         Reset();
@@ -72,5 +80,6 @@ internal class PlayerData
     {
         lives = START_LIVES;
         points = START_POINTS;
+        totalPeoplePicked = TOTAL_PEOPLE_PICKED;
     }
 }

@@ -9,6 +9,8 @@ public class MyGame : Game
 	string mainMenu = "";
 	string endScreen = "";
 	private Level level;
+	private EasyDraw healthUI;
+	private EasyDraw pointUI;
 	public MyGame() : base(1366, 768, false)		// Create a window that's 800x600 and NOT fullscreen
 	{
 		LoadLevel(levelName);
@@ -18,7 +20,7 @@ public class MyGame : Game
 	void Update()
 	{
 		/// HOT RELOAD
-		if (Input.GetKeyDown(Key.Q) && Input.GetKey(Key.LEFT_SHIFT))
+		if (Input.GetKeyDown(Key.R))
         {
 			Console.WriteLine("Reloading the level " + levelName);
 			LoadLevel(levelName);
@@ -36,6 +38,34 @@ public class MyGame : Game
 		new MyGame().Start();					// Create a "MyGame" and start it
 	}
 
+	private void CreateUI()
+	{
+		healthUI = new EasyDraw(100, 20, false);
+		pointUI = new EasyDraw(100, 20, false);
+		healthUI.SetXY(0, height - 748);
+		pointUI.SetXY(width - 100, height - 748);
+
+		LateAddChild(healthUI);
+		LateAddChild(pointUI);
+	}
+
+	public void ShowHealth(int health)
+	{
+		if (healthUI != null)
+		{
+			healthUI.Text("Health: " + health, true);
+		}
+
+	}
+
+	public void ShowPoints(int points)
+	{
+		if (pointUI != null)
+		{
+			pointUI.Text("Points: " + points, true);
+		}
+	}
+
 	private void DestroyAll()
 	{
 		List<GameObject> children = GetChildren();
@@ -51,5 +81,6 @@ public class MyGame : Game
 		DestroyAll();
 		level = new Level(filename);
 		LateAddChild(level);
+		CreateUI();
 	}
 }

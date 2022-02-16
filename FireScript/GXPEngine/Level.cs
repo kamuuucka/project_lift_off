@@ -13,7 +13,7 @@ internal class Level : GameObject
     private List<SpawnPoint> spawnPoints = new List<SpawnPoint>();
     private List<FireBig> fires = new List<FireBig>();
     private int numberOfPeople = 3;
-    private int numberOfFires = 5;
+    private int numberOfFires = 10;
     private Player2 player2;
     private Player1 player1;
     private PlayerData playerData = new PlayerData();
@@ -21,7 +21,6 @@ internal class Level : GameObject
     private FireMan fireman;
     public int properlyGeneratedFire = 0;
     public int properlyGeneratedPeople = 0;
-    private bool gameLoadedFirstTime = true;
 
     public Level(string filename)
     {
@@ -33,7 +32,7 @@ internal class Level : GameObject
         loader = new TiledLoader(filename);
         loader.OnObjectCreated += OnSpriteCreated;
         StartLevel();
-        
+
         SpawnPeople();
         SpawnPlayer2();
         SpawnPlayer1();
@@ -42,7 +41,6 @@ internal class Level : GameObject
         AddPlayer2Visuals();
         x = 50;
         y = 100;
-        gameLoadedFirstTime = false;
     }
 
     private void StartLevel(bool includeImageLayers = true)
@@ -91,7 +89,7 @@ internal class Level : GameObject
                     playerData.Player2Y = obj.Y;
                 }
             }
-            if(obj.Type == "Wall")
+            if (obj.Type == "Wall")
             {
                 Wall wall = new Wall(obj.X, obj.Y, obj);
                 LateAddChild(wall);
@@ -124,8 +122,6 @@ internal class Level : GameObject
 
     private void SpawnPeople()
     {
-        //int properlyGenerated = 0;
-        int numberOfPeople = 3;
         randomNumbers.Clear();
         RandomNumbers(1);
         for (int i = 0; i < numberOfPeople;)
@@ -146,10 +142,6 @@ internal class Level : GameObject
                 RandomNumbers(1);
             }
         }
-        //while (properlyGeneratedPeople != numberOfPeople)
-        //{
-            
-        //}
     }
 
     private void SpawnPlayer1()
@@ -175,7 +167,7 @@ internal class Level : GameObject
         }
 
         target = new Target(playerData.Player1X, playerData.Player1Y, this);
-        LateAddChild(target); 
+        LateAddChild(target);
     }
 
     private void AddPlayer2Visuals()
@@ -200,9 +192,24 @@ internal class Level : GameObject
         playerData.Player2Y = playery;
     }
 
+    public int GetTotalAmountOfPeople()
+    {
+        return playerData.TotalPeoplePicked;
+    }
+
+    public void SetTotalAmountOfPeople()
+    {
+        playerData.TotalPeoplePicked++;
+    }
+
+    public void SetTotalAmountOfPoints(int amount)
+    {
+        playerData.Points += amount;
+    }
+
     public void RestartLevel()
     {
-        SpawnPeople();  
+        SpawnPeople();
     }
 
     private void RandomNumbers(int number)
@@ -226,6 +233,8 @@ internal class Level : GameObject
     {
         //Console.WriteLine(playerData.Lives);
         SpawnFire();
+        ((MyGame)game).ShowHealth(playerData.Lives);
+        ((MyGame)game).ShowPoints(playerData.Points);
     }
 }
 

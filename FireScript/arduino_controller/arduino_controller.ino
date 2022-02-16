@@ -4,6 +4,12 @@ const int buttonUp = 4;
 const int buttonDown = 5;
 const int buttonRight = 6;
 const int buttonLeft = 3;
+char keyUP = KEY_UP_ARROW;
+char keyDOWN = KEY_DOWN_ARROW;
+char keyLEFT = KEY_LEFT_ARROW;
+char keyRIGHT = KEY_RIGHT_ARROW;
+const int spaceButton = 8;
+char keySPACE = ' ';
 
 void setup() {
   pinMode(buttonUp, INPUT);
@@ -38,4 +44,28 @@ void loop() {
     delay(250);
     Keyboard.releaseAll();
   }
+
+    if (analogRead(0) > 900){
+      Keyboard.press(keyDOWN);
+      Serial.print("UPPP");
+      Keyboard.releaseAll();
+    } 
+    else if (analogRead(0) < 300){
+      Keyboard.press(keyUP);
+      Keyboard.releaseAll();
+    } 
+
+    if (analogRead(1) > 900){
+      Keyboard.press(keyRIGHT);
+      Keyboard.releaseAll();
+    } 
+    else if (analogRead(1) < 400){
+      Keyboard.press(keyLEFT);
+      Keyboard.releaseAll();
+    }
+
+    if (digitalRead(spaceButton) == HIGH){
+      Keyboard.press(' ');
+      Keyboard.releaseAll();
+    }
 }

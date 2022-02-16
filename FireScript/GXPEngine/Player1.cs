@@ -18,7 +18,6 @@ internal class Player1 : Sprite
         this.level = level;
         previousX = x;
         previousY = y;
-        Console.WriteLine("Player 1: " + x + " " + y);
         alpha = 0;
     }
 
@@ -48,6 +47,7 @@ internal class Player1 : Sprite
             previousY = y;
         }
         CheckCollisions();
+        OutOfScreenSides(previousX);
     }
 
     private void CheckCollisions()
@@ -55,10 +55,6 @@ internal class Player1 : Sprite
         GameObject[] collisions = GetCollisions();
         for (int i = 0; i < collisions.Length; i++)
         {
-            if (collisions[i] is Ladder)
-            {
-                GoBack();
-            }
             if (collisions[i] is Wall)
             {
                 y = previousY2;
@@ -69,6 +65,17 @@ internal class Player1 : Sprite
                 ((FireBig)collisions[i]).ShootWater();
             }
         }
+    }
+
+    protected bool OutOfScreenSides(float previousX)
+    {
+        if (x < 120 || x > 1090)
+        {
+
+            x = previousX;
+            return true;
+        }
+        else { return false; }
     }
 
     protected void GoBack()

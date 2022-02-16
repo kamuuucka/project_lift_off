@@ -23,7 +23,6 @@ internal class Player2 : Sprite
 
     public Player2(float x, float y, Level level) : base("square.png")
     {
-
         this.x = x;
         this.y = y;
         this.level = level;
@@ -32,7 +31,6 @@ internal class Player2 : Sprite
         previousX = startX;
         previousY = startY;
         previousY2 = startY;
-        Console.WriteLine("Player2: " + x + ", " + y);
         firstGame = true;
         alpha = 0;
     }
@@ -54,14 +52,12 @@ internal class Player2 : Sprite
             if (Input.GetKeyUp(Key.W))
             {
                 previousY2 = y;
-                Console.WriteLine("PY: {0}, Y: {1}", previousY, y);
                 Move(0, -speed);
                 previousY = y;
             }
             else if (Input.GetKeyUp(Key.S))
             {
                 previousY2 = y;
-                Console.WriteLine("PY: {0}, Y: {1}", previousY, y);
                 Move(0, speed);
                 previousY = y;
             }
@@ -80,10 +76,7 @@ internal class Player2 : Sprite
             x = previousX;
             return true;
         }
-        else
-        {
-            return false;
-        }
+        else { return false; }
     }
 
     private void CheckCollisions()
@@ -91,45 +84,42 @@ internal class Player2 : Sprite
         GameObject[] collisions = GetCollisions();
         for (int i = 0; i < collisions.Length; i++)
         {
-            if (collisions[i] is PersonBig)
+            if (!isASprite)
             {
-                if (peopleCollected == 0)
+                if (collisions[i] is PersonBig)
                 {
-                    ((PersonBig)collisions[i]).Grab();
-                    ((PersonBig)collisions[i]).IsPicked = true;
-                    peopleCollected++;
-                    firstGame = false;
-                    Console.WriteLine("PERSON RESCUED, YOU ARE CARRYING {0} PERSON", peopleCollected);
-                }
-                else
-                {
-                    Console.WriteLine("YOU ARE CARRYING A PERSON ALREADY");
-                }
+                    if (peopleCollected == 0)
+                    {
+                        ((PersonBig)collisions[i]).Grab();
+                        ((PersonBig)collisions[i]).IsPicked = true;
+                        peopleCollected++;
+                        level.SetTotalAmountOfPeople();
+                        Console.WriteLine(level.GetTotalAmountOfPeople());
+                        firstGame = false;
+                        Console.WriteLine("PERSON RESCUED, YOU ARE CARRYING {0} PERSON", peopleCollected);
+                    }
+                    else
+                    {
+                        Console.WriteLine("YOU ARE CARRYING A PERSON ALREADY");
+                    }
 
+                }
+                if (collisions[i] is Save)
+                {
+
+                    points += peopleCollected;
+                    level.SetTotalAmountOfPoints(peopleCollected);
+                    peopleCollected = 0;
+                    Console.WriteLine("TOTAL AMOUNT OF PEOPLE SAVED: {0}", points);
+                    RespawnPeople();
+                }
             }
+            
             if (collisions[i] is Ladder)
             {
                 canClimb = true;
             }
-            if (collisions[i] is Save)
-            {
-                if (!isASprite)
-                {
-                    points += peopleCollected;
-                    peopleCollected = 0;
-                    Console.WriteLine("TOTAL AMOUNT OF PEOPLE SAVED: {0}", points);
-                    if (points % 3 == 0 && firstGame == false)
-                    {
-                        level.properlyGeneratedPeople = 0;
-                        level.RestartLevel();
-                        x = startX;
-                        y = startY;
-                        level.UpdatePlayer2(x, y);
-                        firstGame = true;
-                    }
-                }
-                
-            }
+            
             if (collisions[i] is FireBig)
             {
                 GoBack();
@@ -147,10 +137,23 @@ internal class Player2 : Sprite
         x = previousX;
     }
 
+    private void RespawnPeople()
+    {
+        if (level.GetTotalAmountOfPeople() % 3 == 0 && firstGame == false)
+        {
+            level.properlyGeneratedPeople = 0;
+            level.RestartLevel();
+            x = startX;
+            y = startY;
+            level.UpdatePlayer2(x, y);
+            firstGame = true;
+        }
+    }
 
     void Update()
     {
         CharacterMovement();
+        
     }
 }
 

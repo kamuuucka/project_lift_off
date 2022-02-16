@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GXPEngine;
 
 internal class PersonBig : Sprite
@@ -11,19 +7,12 @@ internal class PersonBig : Sprite
     private float timer;
     private float timer2 = 20;
     private bool isPicked;
-    //private Player2 player;
     private PlayerData playerData;
    
     public bool IsPicked
     {
-        get
-        {
-            return isPicked;
-        }
-        set
-        {
-            isPicked = value;
-        }
+        get { return isPicked; }
+        set { isPicked = value; }
     }
     public PersonBig(float x, float y, SpawnPoint spawnPoint, PlayerData playerData) : base("circle.png")
     {
@@ -32,7 +21,6 @@ internal class PersonBig : Sprite
         this.spawnPoint = spawnPoint;
         this.playerData = playerData;
         collider.isTrigger = true;
-        Console.WriteLine(timer2);
     }
 
     public void Grab()
@@ -50,8 +38,8 @@ internal class PersonBig : Sprite
         }
         if (timer > timer2)
         {
-            Console.WriteLine("PERSON DIED");
             playerData.Lives--;
+            playerData.TotalPeoplePicked++;
             LateDestroy();
         }
     }
