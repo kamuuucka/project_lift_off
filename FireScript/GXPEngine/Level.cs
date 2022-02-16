@@ -24,7 +24,7 @@ internal class Level : GameObject
 
     public Level(string filename)
     {
-        for (int i = 0; i < 16; i++)
+        for (int i = 0; i < 29; i++)
         {
             phList.Add(i);
         }
@@ -32,7 +32,6 @@ internal class Level : GameObject
         loader = new TiledLoader(filename);
         loader.OnObjectCreated += OnSpriteCreated;
         StartLevel();
-
         SpawnPeople();
         SpawnPlayer2();
         SpawnPlayer1();

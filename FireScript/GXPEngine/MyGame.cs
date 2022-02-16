@@ -11,6 +11,7 @@ public class MyGame : Game
 	private Level level;
 	private EasyDraw healthUI;
 	private EasyDraw pointUI;
+	private EasyDraw personUI;
 	public MyGame() : base(1366, 768, false)		// Create a window that's 800x600 and NOT fullscreen
 	{
 		LoadLevel(levelName);
@@ -42,8 +43,10 @@ public class MyGame : Game
 	{
 		healthUI = new EasyDraw(100, 20, false);
 		pointUI = new EasyDraw(100, 20, false);
+		personUI = new EasyDraw(100, 20, false);
 		healthUI.SetXY(0, height - 748);
 		pointUI.SetXY(width - 100, height - 748);
+		personUI.SetXY(width / 2, height - 748);
 
 		LateAddChild(healthUI);
 		LateAddChild(pointUI);
@@ -65,6 +68,11 @@ public class MyGame : Game
 			pointUI.Text("Points: " + points, true);
 		}
 	}
+
+	public void ShowPersonStats()
+    {
+		if ()
+    }
 
 	private void DestroyAll()
 	{

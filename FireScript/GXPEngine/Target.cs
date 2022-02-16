@@ -8,7 +8,7 @@ using GXPEngine;
 
 internal class Target : Player1
 {
-    Sprite targetSpr = new Sprite("colors.png");
+    Sprite targetSpr = new Sprite("square.png");
     public Target(float x, float y, Level level) : base(x, y, level)
     {
         //this.x = x;

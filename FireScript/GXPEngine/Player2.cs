@@ -104,6 +104,7 @@ internal class Player2 : Sprite
                     }
 
                 }
+
                 if (collisions[i] is Save)
                 {
 
