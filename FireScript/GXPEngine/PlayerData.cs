@@ -9,6 +9,10 @@ internal class PlayerData
     private const int START_POINTS = 0;
     private int lives = 0;
     private int points = 0;
+    private float player1X;
+    private float player1Y;
+    private float player2X;
+    private float player2Y;
 
     public int Lives
     {
@@ -28,14 +32,32 @@ internal class PlayerData
 
     public int Points
     {
-        get
-        {
-            return points;
-        }
-        set
-        {
-            points = value;
-        }
+        get { return points; }
+        set { points = value; }
+    }
+
+    public float Player1X
+    {
+        get { return player1X; }
+        set { player1X = value; }
+    }
+
+    public float Player1Y
+    {
+        get { return player1Y; }
+        set { player1Y = value; }
+    }
+
+    public float Player2X
+    {
+        get { return player2X; }
+        set { player2X = value; }
+    }
+
+    public float Player2Y
+    {
+        get { return player2Y; }
+        set { player2Y = value; }
     }
 
     public PlayerData()

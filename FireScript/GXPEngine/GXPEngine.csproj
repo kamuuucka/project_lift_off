@@ -43,6 +43,7 @@
     <Compile Include="Fire.cs" />
     <Compile Include="FireBig.cs" />
     <Compile Include="FireData.cs" />
+    <Compile Include="FireMan.cs" />
     <Compile Include="GXPEngine\AddOns\Gizmos.cs" />
     <Compile Include="GXPEngine\AddOns\SpriteBatch.cs" />
     <Compile Include="GXPEngine\AddOns\TiledLoader.cs" />
@@ -94,9 +95,11 @@
     <Compile Include="Player1OnTheBottom.cs" />
     <Compile Include="Player2.cs" />
     <Compile Include="PlayerData.cs" />
+    <Compile Include="PlayerStats.cs" />
     <Compile Include="Save.cs" />
     <Compile Include="SpawnPoint.cs" />
     <Compile Include="SpawnPointPlayer.cs" />
+    <Compile Include="Target.cs" />
     <Compile Include="Wall.cs" />
   </ItemGroup>
   <ItemGroup>

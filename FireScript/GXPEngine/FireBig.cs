@@ -50,7 +50,7 @@ internal class FireBig : AnimationSprite
 
     void Update()
     {
-        Animate();
+        Animate(0.34f);
     }
 
     

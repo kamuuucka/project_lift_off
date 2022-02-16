@@ -14,14 +14,13 @@ internal class Level : GameObject
     private List<FireBig> fires = new List<FireBig>();
     private int numberOfPeople = 3;
     private int numberOfFires = 5;
-    private float player1X;
-    private float player1Y;
-    private float player2X;
-    private float player2Y;
     private Player2 player2;
     private Player1 player1;
     private PlayerData playerData = new PlayerData();
+    private Target target;
+    private FireMan fireman;
     public int properlyGeneratedFire = 0;
+    public int properlyGeneratedPeople = 0;
     private bool gameLoadedFirstTime = true;
 
     public Level(string filename)
@@ -39,6 +38,8 @@ internal class Level : GameObject
         SpawnPlayer2();
         SpawnPlayer1();
         SpawnFire();
+        AddPlayer1Visuals();
+        AddPlayer2Visuals();
         x = 50;
         y = 100;
         gameLoadedFirstTime = false;
@@ -81,13 +82,13 @@ internal class Level : GameObject
 
                 if (sPlayer.isPlayer1)
                 {
-                    player1X = obj.X;
-                    player1Y = obj.Y;
+                    playerData.Player1X = obj.X;
+                    playerData.Player1Y = obj.Y;
                 }
                 else
                 {
-                    player2X = obj.X;
-                    player2Y = obj.Y;
+                    playerData.Player2X = obj.X;
+                    playerData.Player2Y = obj.Y;
                 }
             }
             if(obj.Type == "Wall")
@@ -101,23 +102,6 @@ internal class Level : GameObject
 
     private void SpawnFire()
     {
-       //RandomNumbers(numberOfFires);
-
-        //if (gameLoadedFirstTime)
-        //{
-        //    for (int i = 0; i < randomNumbers.Count; i++)
-        //    {
-        //        if (!spawnPoints[randomNumbers[i]].IsUsed)
-        //        {
-        //            FireBig fireBig = new FireBig(tiledObjects[randomNumbers[i]].X, tiledObjects[randomNumbers[i]].Y, spawnPoints[randomNumbers[i]]);
-        //            LateAddChild(fireBig);
-        //            fires.Add(fireBig);
-        //            spawnPoints[randomNumbers[i]].IsUsed = true;
-        //        }
-        //    }
-        //}
-
-        int properlyGenerated = 0;
         randomNumbers.Clear();
         RandomNumbers(1);
         while (properlyGeneratedFire != numberOfFires)
@@ -128,6 +112,7 @@ internal class Level : GameObject
                 LateAddChild(fireBig);
                 spawnPoints[randomNumbers[0]].IsUsed = true;
                 properlyGeneratedFire++;
+                AddPlayer1Visuals();
             }
             else
             {
@@ -135,22 +120,25 @@ internal class Level : GameObject
                 RandomNumbers(1);
             }
         }
-
     }
 
     private void SpawnPeople()
     {
-        int properlyGenerated = 0;
+        //int properlyGenerated = 0;
+        int numberOfPeople = 3;
         randomNumbers.Clear();
         RandomNumbers(1);
-        while (properlyGenerated != numberOfPeople)
+        for (int i = 0; i < numberOfPeople;)
         {
             if (!spawnPoints[randomNumbers[0]].IsUsed)
             {
                 PersonBig personBig = new PersonBig(tiledObjects[randomNumbers[0]].X, tiledObjects[randomNumbers[0]].Y, spawnPoints[randomNumbers[0]], playerData);
                 LateAddChild(personBig);
                 spawnPoints[randomNumbers[0]].IsUsed = true;
-                properlyGenerated++;
+                properlyGeneratedPeople++;
+                AddPlayer2Visuals();
+                AddPlayer1Visuals();
+                i++;
             }
             else
             {
@@ -158,25 +146,63 @@ internal class Level : GameObject
                 RandomNumbers(1);
             }
         }
+        //while (properlyGeneratedPeople != numberOfPeople)
+        //{
+            
+        //}
     }
 
     private void SpawnPlayer1()
     {
-        player1 = new Player1(player1X, player1Y, this);
-        Player1OnTheBottom playerOnTheBottom = new Player1OnTheBottom(player1X, loader.map.Height * 128 - 64, this);
-        LateAddChild(player1);
+        player1 = new Player1(playerData.Player1X, playerData.Player1Y, this);
+        Player1OnTheBottom playerOnTheBottom = new Player1OnTheBottom(playerData.Player1X, loader.map.Height * 128 - 64, this);
         LateAddChild(playerOnTheBottom);
+        LateAddChild(player1);
     }
 
     private void SpawnPlayer2()
     {
-        player2 = new Player2(player2X, player2Y, this);
+        player2 = new Player2(playerData.Player2X, playerData.Player2Y, this);
         LateAddChild(player2);
+    }
+
+    private void AddPlayer1Visuals()
+    {
+        if (target != null)
+        {
+            target.LateDestroy();
+            Console.WriteLine(playerData.Player1X);
+        }
+
+        target = new Target(playerData.Player1X, playerData.Player1Y, this);
+        LateAddChild(target); 
+    }
+
+    private void AddPlayer2Visuals()
+    {
+        if (fireman != null)
+        {
+            fireman.LateDestroy();
+        }
+        fireman = new FireMan(playerData.Player2X, playerData.Player2Y, this);
+        LateAddChild(fireman);
+    }
+
+    public void UpdatePlayer1(float playerx, float playery)
+    {
+        playerData.Player1X = playerx;
+        playerData.Player1Y = playery;
+    }
+
+    public void UpdatePlayer2(float playerx, float playery)
+    {
+        playerData.Player2X = playerx;
+        playerData.Player2Y = playery;
     }
 
     public void RestartLevel()
     {
-        SpawnPeople();
+        SpawnPeople();  
     }
 
     private void RandomNumbers(int number)

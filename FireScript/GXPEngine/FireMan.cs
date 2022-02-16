@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 using GXPEngine;
 
 
-internal class Target : Player1
+internal class FireMan : Player2
 {
     Sprite targetSpr = new Sprite("colors.png");
-    public Target(float x, float y, Level level) : base(x, y, level)
+    public FireMan(float x, float y, Level level) : base(x, y, level)
     {
         //this.x = x;
         //this.y = y;
         GoBack();
         AddChild(targetSpr);
+        isASprite = true;
     }
 
     void Update()
@@ -22,4 +23,5 @@ internal class Target : Player1
         CharacterMovement();
     }
 }
+
 

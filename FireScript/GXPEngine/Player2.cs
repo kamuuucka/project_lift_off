@@ -16,9 +16,10 @@ internal class Player2 : Sprite
     private bool canClimb = false;
     public int points = 0;
     private int peopleCollected = 0;
+    public bool isASprite = false;
     public bool firstGame;
     private Level level;
-    
+
 
     public Player2(float x, float y, Level level) : base("square.png")
     {
@@ -33,9 +34,10 @@ internal class Player2 : Sprite
         previousY2 = startY;
         Console.WriteLine("Player2: " + x + ", " + y);
         firstGame = true;
+        alpha = 0;
     }
 
-    private void CharacterMovement()
+    protected void CharacterMovement()
     {
         if (Input.GetKeyUp(Key.A))
         {
@@ -64,7 +66,7 @@ internal class Player2 : Sprite
                 previousY = y;
             }
         }
-        
+
         canClimb = false;
         CheckCollisions();
         OutOfScreenSides();
@@ -74,7 +76,7 @@ internal class Player2 : Sprite
     {
         if (x < 0 || x > 1280)
         {
-            
+
             x = previousX;
             return true;
         }
@@ -103,7 +105,7 @@ internal class Player2 : Sprite
                 {
                     Console.WriteLine("YOU ARE CARRYING A PERSON ALREADY");
                 }
-                
+
             }
             if (collisions[i] is Ladder)
             {
@@ -111,16 +113,22 @@ internal class Player2 : Sprite
             }
             if (collisions[i] is Save)
             {
-                points += peopleCollected;
-                peopleCollected = 0;
-                Console.WriteLine("TOTAL AMOUNT OF PEOPLE SAVED: {0}", points);
-                if (points % 3 == 0 && firstGame == false)
+                if (!isASprite)
                 {
-                    level.RestartLevel();
-                    x = startX;
-                    y = startY;
-                    firstGame = true;
+                    points += peopleCollected;
+                    peopleCollected = 0;
+                    Console.WriteLine("TOTAL AMOUNT OF PEOPLE SAVED: {0}", points);
+                    if (points % 3 == 0 && firstGame == false)
+                    {
+                        level.properlyGeneratedPeople = 0;
+                        level.RestartLevel();
+                        x = startX;
+                        y = startY;
+                        level.UpdatePlayer2(x, y);
+                        firstGame = true;
+                    }
                 }
+                
             }
             if (collisions[i] is FireBig)
             {
@@ -133,7 +141,7 @@ internal class Player2 : Sprite
         }
     }
 
-    void GoBack()
+    protected void GoBack()
     {
         y = previousY;
         x = previousX;

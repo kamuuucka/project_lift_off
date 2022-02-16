@@ -30,7 +30,6 @@ internal class PersonBig : Sprite
         this.x = x;
         this.y = y;
         this.spawnPoint = spawnPoint;
-        //this.player = player;
         this.playerData = playerData;
         collider.isTrigger = true;
         Console.WriteLine(timer2);

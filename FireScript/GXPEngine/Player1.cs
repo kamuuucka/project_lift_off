@@ -4,8 +4,8 @@ using GXPEngine;
 
 internal class Player1 : Sprite
 {
-    private float previousX = 0;
-    private float previousY = 0;
+    private float previousX;
+    private float previousY ;
     private float previousY2 = 0;
     protected float playerSpeed = 5;
     private Level level;
@@ -16,10 +16,13 @@ internal class Player1 : Sprite
         this.x = x;
         this.y = y;
         this.level = level;
+        previousX = x;
+        previousY = y;
         Console.WriteLine("Player 1: " + x + " " + y);
+        alpha = 0;
     }
 
-    private void CharacterMovement()
+    protected void CharacterMovement()
     {
         if (Input.GetKey(Key.LEFT))
         {
@@ -44,7 +47,6 @@ internal class Player1 : Sprite
             Move(0, playerSpeed);
             previousY = y;
         }
-
         CheckCollisions();
     }
 
@@ -63,12 +65,13 @@ internal class Player1 : Sprite
             }
             if (collisions[i] is FireBig)
             {
+                level.UpdatePlayer1(previousX, previousY);
                 ((FireBig)collisions[i]).ShootWater();
             }
         }
     }
 
-    private void GoBack()
+    protected void GoBack()
     {
         y = previousY;
         x = previousX;
