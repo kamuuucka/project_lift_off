@@ -4,7 +4,7 @@ using GXPEngine;
 
 internal class Player1OnTheBottom : Player1
 {
-    private Sprite player = new Sprite("square.png");
+    private Sprite player = new Sprite("P1.png");
     private float previousX;
     public Player1OnTheBottom(float x, float y, Level level) : base(x, y, level)
     {

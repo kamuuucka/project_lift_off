@@ -5,9 +5,7 @@ using System.Collections.Generic;
 
 public class MyGame : Game
 {
-	string levelName = "map.tmx";
-	string mainMenu = "";
-	string endScreen = "";
+	string levelName = "mapv2.tmx";
 	private Level level;
 	private EasyDraw healthUI;
 	private EasyDraw pointUI;
@@ -15,14 +13,11 @@ public class MyGame : Game
 	private SoundChannel soundTrackGame;
 	private SoundChannel soundForGameOver;
 	private EasyDraw background;
+	private bool isGame = false;
 	public MyGame() : base(1366, 768, false)		// Create a window that's 800x600 and NOT fullscreen
 	{
-
-		//background.height = height;
-		//background.width = width;
-		background = new EasyDraw("background1.png", false);
+		background = new EasyDraw("menu.png", false);
 		AddChild(background);
-		LoadLevel(levelName);
 	}
 
 	// For every game object, Update is called every frame, by the engine:
@@ -35,19 +30,29 @@ public class MyGame : Game
 			LoadLevel(levelName);
         }
 
-		if (level.GameOver())
+		if (level != null)
         {
-			//Exiting game, make it end screen later
-			//StopPlaying(soundTrackGame);
-			StopPlaying();
-			if (soundTrackGame != null)
-            {
-				soundTrackGame.Stop();
+			if (level.GameOver())
+			{ 
+				pointUI.SetXY(width / 2 - 100, height - 680);
+				
+				StopPlaying();
+				if (soundTrackGame != null)
+				{
+					soundTrackGame.Stop();
+				}
+				background = new EasyDraw("game_over.png", false);
+				AddChild(background);
+				LateAddChild(pointUI);
+				PlayGameOver();
 			}
-			
-			PlayGameOver();
-			//Destroy();
+		}
+
+		if (!isGame)
+        {
+			MovementOnTheScreen();
         }
+		
 	}
 
 	static void Main()							// Main() is the first method that's called when the program is run
@@ -87,11 +92,15 @@ public class MyGame : Game
 		}
 	}
 
-	public void ShowPersonStats(bool isShown)
+	public void ShowPersonStats(bool isShown, string text)
     {
+		Console.WriteLine(isShown);
 		if (personUI != null && isShown)
         {
-			personUI.Text("You are carrying a person!");
+			personUI.Text(text);
+        } else if (personUI != null)
+        {
+			personUI.Text(text);
         }
     }
 
@@ -120,9 +129,25 @@ public class MyGame : Game
 		}
 	}
 
+	private void MovementOnTheScreen()
+    {
+		if (Input.GetKeyUp(Key.A))
+        {
+			background.Destroy();
+			background = new EasyDraw("background1.png", false);
+			AddChild(background);
+			LoadLevel(levelName);
+        }
+		else if (Input.GetKeyUp(Key.D))
+        {
+			Destroy();
+        }
+    }
 
-	void LoadLevel(string filename)
+
+	public void LoadLevel(string filename)
 	{
+		isGame = true;
 		DestroyAll();
 		level = new Level(filename);
 		LateAddChild(level);

@@ -19,11 +19,13 @@ internal class Level : GameObject
     private PlayerData playerData = new PlayerData();
     private Target target;
     private FireMan fireman;
+    private string filename;
     public int properlyGeneratedFire = 0;
     public int properlyGeneratedPeople = 0;
 
     public Level(string filename)
     {
+        this.filename = filename;
         for (int i = 0; i < 29; i++)
         {
             phList.Add(i);
@@ -32,12 +34,17 @@ internal class Level : GameObject
         loader = new TiledLoader(filename);
         loader.OnObjectCreated += OnSpriteCreated;
         StartLevel();
-        SpawnPeople();
-        SpawnPlayer2();
-        SpawnPlayer1();
-        SpawnFire();
-        AddPlayer1Visuals();
-        AddPlayer2Visuals();
+
+        if (filename.Contains("map"))
+        {
+            SpawnPeople();
+            SpawnPlayer2();
+            SpawnPlayer1();
+            SpawnFire();
+            AddPlayer1Visuals();
+            AddPlayer2Visuals();
+        }
+        
         x = 0;
         y = 125;
     }
@@ -50,6 +57,7 @@ internal class Level : GameObject
         loader.AddManualType("SpawnPoint");
         loader.AddManualType("SpawnPointPlayer");
         loader.AddManualType("Wall");
+        loader.AddManualType("Button");
         loader.rootObject = this;
         loader.LoadTileLayers(0);
         loader.addColliders = true;
@@ -101,22 +109,26 @@ internal class Level : GameObject
     {
         randomNumbers.Clear();
         RandomNumbers(1);
-        while (properlyGeneratedFire != numberOfFires)
+        if (spawnPoints != null)
         {
-            if (!spawnPoints[randomNumbers[0]].IsUsed)
+            while (properlyGeneratedFire != numberOfFires)
             {
-                FireBig fireBig = new FireBig(tiledObjects[randomNumbers[0]].X, tiledObjects[randomNumbers[0]].Y, spawnPoints[randomNumbers[0]], player1);
-                LateAddChild(fireBig);
-                spawnPoints[randomNumbers[0]].IsUsed = true;
-                properlyGeneratedFire++;
-                AddPlayer1Visuals();
-            }
-            else
-            {
-                randomNumbers.Clear();
-                RandomNumbers(1);
+                if (!spawnPoints[randomNumbers[0]].IsUsed && spawnPoints[randomNumbers[0]] != null)
+                {
+                    FireBig fireBig = new FireBig(tiledObjects[randomNumbers[0]].X, tiledObjects[randomNumbers[0]].Y, spawnPoints[randomNumbers[0]], player1);
+                    LateAddChild(fireBig);
+                    spawnPoints[randomNumbers[0]].IsUsed = true;
+                    properlyGeneratedFire++;
+                    AddPlayer1Visuals();
+                }
+                else
+                {
+                    randomNumbers.Clear();
+                    RandomNumbers(1);
+                }
             }
         }
+       
     }
 
     private void SpawnPeople()

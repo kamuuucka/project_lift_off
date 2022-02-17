@@ -5,6 +5,6 @@ internal class Save : Sprite
 {
     public Save(TiledObject obj = null) : base("checkers.png")
     {
-        alpha = 1;
+        alpha = 0;
     }
 }

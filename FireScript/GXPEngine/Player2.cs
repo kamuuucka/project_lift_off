@@ -43,11 +43,13 @@ internal class Player2 : Sprite
         {
             previousX = x;
             Move(-speed, 0);
+            Mirror(false,false);
         }
         else if (Input.GetKeyUp(Key.D))
         {
             previousX = x;
             Move(speed, 0);
+            Mirror(true, false);
         }
         if (canClimb)
         {
@@ -158,10 +160,30 @@ internal class Player2 : Sprite
         }
     }
 
+    private string TextToShow()
+    {
+        if (isPicked == false)
+        {
+            return "";
+        }
+        else
+        {
+            return "You are carrying a person";
+        }
+    }
+
     void Update()
     {
         CharacterMovement();
-        ((MyGame)game).ShowPersonStats(isPicked);
+        //((MyGame)game).ShowPersonStats(isPicked, TextToShow());
+        //if (isPicked)
+        //{
+        //    SetColor(0, 255, 0);
+        //}
+        //else
+        //{
+        //SetColor(1, 255, 0);    
+        //}
     }
 }
 

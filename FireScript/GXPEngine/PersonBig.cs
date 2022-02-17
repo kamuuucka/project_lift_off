@@ -1,7 +1,7 @@
 ﻿using System;
 using GXPEngine;
 
-internal class PersonBig : Sprite
+internal class PersonBig : AnimationSprite
 {
     private SpawnPoint spawnPoint;
     private float timer;
@@ -9,7 +9,6 @@ internal class PersonBig : Sprite
     private bool isPicked;
     private PlayerData playerData;
     private Sound person_died = new Sound("npc_died.mp3");
-    private Random rand = new Random();
 
     public bool IsPicked
     {
@@ -17,16 +16,16 @@ internal class PersonBig : Sprite
         set { isPicked = value; }
     }
 
-    public PersonBig(float x, float y, SpawnPoint spawnPoint, PlayerData playerData) : base("circle.png")
+    public PersonBig(float x, float y, SpawnPoint spawnPoint, PlayerData playerData) : base("NPC_new.png", 2, 1)
     {
         this.x = x;
         this.y = y;
         this.spawnPoint = spawnPoint;
         this.playerData = playerData;
         collider.isTrigger = true;
-        timer2 = Utils.Random(10, 12);
+        timer2 = Utils.Random(15, 30);
         Console.WriteLine("Timer equals: " + timer2);
-
+        SetCycle(0, 2);
     }
 
     public void Grab()
@@ -52,18 +51,6 @@ internal class PersonBig : Sprite
         }
     }
 
-    private float GenerateRandomValue()
-    {
-        Random rand = new Random();
-        double min = 20;
-        double max = 30;
-        double range = max - min;
-        double sample = rand.NextDouble();
-        double scaled = (sample * range) + min;
-        float f = (float)scaled;
-        return f;
-    }
-
     void Update()
     {
         if (!isPicked)
@@ -74,7 +61,7 @@ internal class PersonBig : Sprite
         {
             Console.WriteLine("Person picked");
         }
-
+        Animate(0.05f);
     }
 }
 
