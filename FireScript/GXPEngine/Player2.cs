@@ -14,6 +14,8 @@ internal class Player2 : Sprite
     public float startY = 0;
     private float speed = 128f;
     private bool canClimb = false;
+    private bool isPicked = false;
+    private Sound person_saved = new Sound("npc_saved.mp3");
     public int points = 0;
     private int peopleCollected = 0;
     public bool isASprite = false;
@@ -90,6 +92,7 @@ internal class Player2 : Sprite
                 {
                     if (peopleCollected == 0)
                     {
+                        isPicked = true;
                         ((PersonBig)collisions[i]).Grab();
                         ((PersonBig)collisions[i]).IsPicked = true;
                         peopleCollected++;
@@ -107,11 +110,15 @@ internal class Player2 : Sprite
 
                 if (collisions[i] is Save)
                 {
-
-                    points += peopleCollected;
-                    level.SetTotalAmountOfPoints(peopleCollected);
-                    peopleCollected = 0;
-                    Console.WriteLine("TOTAL AMOUNT OF PEOPLE SAVED: {0}", points);
+                    if (isPicked)
+                    {
+                        isPicked = false;
+                        person_saved.Play();
+                        points += peopleCollected;
+                        level.SetTotalAmountOfPoints(peopleCollected);
+                        peopleCollected = 0;
+                        Console.WriteLine("TOTAL AMOUNT OF PEOPLE SAVED: {0}", points);
+                    }
                     RespawnPeople();
                 }
             }
@@ -154,7 +161,7 @@ internal class Player2 : Sprite
     void Update()
     {
         CharacterMovement();
-        
+        ((MyGame)game).ShowPersonStats(isPicked);
     }
 }
 

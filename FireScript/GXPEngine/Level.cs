@@ -38,8 +38,8 @@ internal class Level : GameObject
         SpawnFire();
         AddPlayer1Visuals();
         AddPlayer2Visuals();
-        x = 50;
-        y = 100;
+        x = 0;
+        y = 125;
     }
 
     private void StartLevel(bool includeImageLayers = true)

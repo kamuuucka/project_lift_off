@@ -10,8 +10,9 @@ internal class Player1 : Sprite
     protected float playerSpeed = 5;
     private Level level;
     private bool isEmpty = false;
+    
 
-    public Player1(float x, float y, Level level) : base("colors.png")
+    public Player1(float x, float y, Level level) : base("water_spritesheet.png")
     {
         this.x = x;
         this.y = y;
@@ -77,6 +78,8 @@ internal class Player1 : Sprite
         }
         else { return false; }
     }
+
+    
 
     protected void GoBack()
     {

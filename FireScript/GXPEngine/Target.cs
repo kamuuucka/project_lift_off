@@ -8,11 +8,10 @@ using GXPEngine;
 
 internal class Target : Player1
 {
-    Sprite targetSpr = new Sprite("square.png");
+    Sprite targetSpr = new Sprite("cursor_2.png");
+    AnimationSprite target = new AnimationSprite("water_spritesheet.png", 3, 1);
     public Target(float x, float y, Level level) : base(x, y, level)
     {
-        //this.x = x;
-        //this.y = y;
         GoBack();
         AddChild(targetSpr);
     }
