@@ -1,3 +1,5 @@
-Point and click game made in processing. As a magical snail help a boy with going to sleep.
+Arcade game made as a school project.
 
-It was a group project. I did most of programming for this project. I was responsible mostly for point and click method, and drag and drop method (it is not working as planned, but at that time I did not know how to improve it).
+You play as 2 firefighters: one who needs to put down fire, second one who have to save people.
+
+I programmed whole project in two weeks alone. The game is not as good as it could be, but back then I didn't have enough knowledge about the engine and I was struggling with team issues.
